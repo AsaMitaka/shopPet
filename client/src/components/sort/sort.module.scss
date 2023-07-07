@@ -1,0 +1,43 @@
+.sort {
+  z-index: 2;
+  font-size: 20px;
+  position: relative;
+
+  .sortLabel {
+    .sortLabelSpan {
+      font-size: 22px;
+      font-weight: bolder;
+      color: red;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .sortBlock {
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    .sortBlockList {
+      .sortBlockItem {
+        list-style-type: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: white;
+        border: 3px solid black;
+        cursor: pointer;
+      }
+
+      .sortBlockActiveItem {
+        list-style-type: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background-color: black;
+        border: 3px solid red;
+        cursor: pointer;
+      }
+    }
+  }
+}

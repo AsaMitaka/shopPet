@@ -1,0 +1,17 @@
+.foodcatalog {
+  flex: 1;
+
+  .foodRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 5px;
+  }
+
+  .foodCatalogBlock {
+    padding: 10px 20px;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
