@@ -2,14 +2,20 @@ import { useState } from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import styles from './sort.module.scss';
 
-const Sort = () => {
+const Sort = ({ sortName, setSortName }) => {
   const [isActive, setActive] = useState(false);
-  const [selectedSort, setSelectedSort] = useState(0);
-  const arr = ['popular', 'price', 'alphabet'];
-  const sortName = arr[selectedSort];
 
-  const handleSort = (index) => {
-    setSelectedSort(index);
+  const arr = [
+    { name: 'Popular↑', sort: 'rating' },
+    { name: 'Popular↓', sort: '-rating' },
+    { name: 'Price↑', sort: 'price' },
+    { name: 'Price↓', sort: '-price' },
+    { name: 'Alphabet↑', sort: 'name' },
+    { name: 'Alphabet↓', sort: '-name' },
+  ];
+
+  const handleSort = (obj) => {
+    setSortName(obj);
     setActive(false);
   };
 
@@ -23,7 +29,7 @@ const Sort = () => {
         {isActive ? <AiFillCaretUp /> : <AiFillCaretDown />}
         <b>Sort by: </b>
         <span className={styles.sortLabelSpan} onClick={handleActive}>
-          {sortName}
+          {sortName.name}
         </span>
       </div>
       {isActive && (
@@ -32,11 +38,11 @@ const Sort = () => {
             {arr.map((item, index) => (
               <li
                 key={index}
-                onClick={() => handleSort(index)}
+                onClick={() => handleSort(item)}
                 className={
-                  index === selectedSort ? styles.sortBlockActiveItem : styles.sortBlockItem
+                  item.sort === sortName.sort ? styles.sortBlockActiveItem : styles.sortBlockItem
                 }>
-                {item}
+                {item.name}
               </li>
             ))}
           </ul>

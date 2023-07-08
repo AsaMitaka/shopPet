@@ -1,0 +1,19 @@
+.cartEmpty {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .cartEmptyBlock {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: red;
+    border-radius: 25px;
+  }
+}

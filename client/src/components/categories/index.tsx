@@ -1,27 +1,32 @@
-import { useState } from 'react';
 import styles from './categories.module.scss';
 
-const Categories = () => {
-  const arr = ['Water', 'Vegetables', 'Fruits', 'Meat', 'Cheese', 'Bread'];
-  const [activeCategory, setActiveCategory] = useState(null);
-  const handleCategory = (index) => {
-    setActiveCategory(index);
+const Categories = ({ ctgName, setCtgName }) => {
+  const arr = [
+    { name: 'Water', ctg: 'water' },
+    { name: 'Vegetable', ctg: 'vegetable' },
+    { name: 'Fruit', ctg: 'fruit' },
+    { name: 'Cheese', ctg: 'cheese' },
+    { name: 'Bread', ctg: 'bread' },
+  ];
+
+  const handleCategory = (obj) => {
+    setCtgName(obj);
   };
 
   return (
     <div className={styles.ctg}>
       <ul className={styles.ctgList}>
         <li
-          className={activeCategory === null ? styles.activeCtgItem : styles.ctgItem}
-          onClick={() => handleCategory(null)}>
+          className={ctgName.ctg === null ? styles.activeCtgItem : styles.ctgItem}
+          onClick={() => handleCategory({ name: '', ctg: null })}>
           All
         </li>
         {arr.map((item, id) => (
           <li
             key={id}
-            className={id === activeCategory ? styles.activeCtgItem : styles.ctgItem}
-            onClick={() => handleCategory(id)}>
-            {item}
+            className={item.ctg === ctgName.ctg ? styles.activeCtgItem : styles.ctgItem}
+            onClick={() => handleCategory(item)}>
+            {item.name}
           </li>
         ))}
       </ul>

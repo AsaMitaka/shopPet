@@ -8,13 +8,24 @@ const FoodCatalog = () => {
   const [isError, setError] = useState(null);
   const [food, setFood] = useState([]);
 
+  const [categoryName, setCategoryName] = useState({ name: '', ctg: null });
+  const [sortName, setSortName] = useState({ name: 'Popular', sort: 'rating' });
+
   useEffect(() => {
     const getData = async () => {
       try {
-        await axios.get('https://64a83dc3dca581464b858768.mockapi.io/products').then((response) => {
-          setFood(response.data);
-          setLoading(false);
-        });
+        const category = categoryName.ctg === null ? '' : categoryName.ctg;
+        const sortBy = sortName.sort.replace('-', '');
+        const orderBy = sortName.sort.includes('-') ? 'asc' : 'desc';
+
+        await axios
+          .get(
+            `https://64a83dc3dca581464b858768.mockapi.io/products?${category}&sortBy=${sortBy}&order=${orderBy}`,
+          )
+          .then((response) => {
+            setFood(response.data);
+            setLoading(false);
+          });
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -23,14 +34,14 @@ const FoodCatalog = () => {
     };
 
     getData();
-  }, []);
+  }, [categoryName, sortName]);
 
   return (
     <div className={styles.foodcatalog}>
       <h1>Food Catalog</h1>
       <div className={styles.foodRow}>
-        <Categories />
-        <Sort />
+        <Categories ctgName={categoryName} setCtgName={setCategoryName} />
+        <Sort sortName={sortName} setSortName={setSortName} />
       </div>
       <div className={styles.foodCatalogBlock}>
         {isLoading
