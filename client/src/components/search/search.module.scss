@@ -1,4 +1,12 @@
-.searchInput {
-  padding: 5px 15px;
-  border-radius: 5px;
+.search {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .searchInput {
+    padding: 5px 5px 5px 40px;
+    border-radius: 5px;
+    width: 200px;
+    outline: none;
+  }
 }

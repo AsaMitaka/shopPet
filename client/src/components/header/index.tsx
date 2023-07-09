@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './header.module.scss';
 import { Search } from '..';
 
-const Header = () => {
+const Header = ({ searchValue, setSearchValue }) => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -14,10 +14,10 @@ const Header = () => {
             </Link>
           </div>
           <div className={styles.navListCenter}>
+            <Search searchValue={searchValue} setSearchValue={setSearchValue} />
             <Link to="/catalog" className={styles.navListLink}>
               Catalog
             </Link>
-            <Search />
           </div>
           <div className={styles.navListRight}>
             <Link to="/cart" className={styles.navListLink}>

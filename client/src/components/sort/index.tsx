@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import styles from './sort.module.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../../redux/slices/filterSlice';
 
-const Sort = ({ sortName, setSortName }) => {
+const Sort = () => {
+  const sort = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
   const [isActive, setActive] = useState(false);
 
   const arr = [
-    { name: 'Popular↑', sort: 'rating' },
-    { name: 'Popular↓', sort: '-rating' },
-    { name: 'Price↑', sort: 'price' },
-    { name: 'Price↓', sort: '-price' },
-    { name: 'Alphabet↑', sort: 'name' },
-    { name: 'Alphabet↓', sort: '-name' },
+    { name: 'Popular↑', sortType: 'rating' },
+    { name: 'Popular↓', sortType: '-rating' },
+    { name: 'Price↑', sortType: 'price' },
+    { name: 'Price↓', sortType: '-price' },
+    { name: 'Alphabet↑', sortType: 'name' },
+    { name: 'Alphabet↓', sortType: '-name' },
   ];
 
   const handleSort = (obj) => {
-    setSortName(obj);
+    dispatch(setSort(obj));
     setActive(false);
   };
 
@@ -29,7 +33,7 @@ const Sort = ({ sortName, setSortName }) => {
         {isActive ? <AiFillCaretUp /> : <AiFillCaretDown />}
         <b>Sort by: </b>
         <span className={styles.sortLabelSpan} onClick={handleActive}>
-          {sortName.name}
+          {sort.name}
         </span>
       </div>
       {isActive && (
@@ -40,7 +44,9 @@ const Sort = ({ sortName, setSortName }) => {
                 key={index}
                 onClick={() => handleSort(item)}
                 className={
-                  item.sort === sortName.sort ? styles.sortBlockActiveItem : styles.sortBlockItem
+                  item.sortType === sort.sortType
+                    ? styles.sortBlockActiveItem
+                    : styles.sortBlockItem
                 }>
                 {item.name}
               </li>
