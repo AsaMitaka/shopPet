@@ -3,37 +3,25 @@ import axios from 'axios';
 import styles from './foodcatalog.module.scss';
 import { Categories, FoodComponent, Loader, Sort } from '../../components';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllProducts } from '../../redux/slices/productsSlice';
 
 const FoodCatalog = ({ searchValue }) => {
-  const [isLoading, setLoading] = useState(true);
-  const [isError, setError] = useState(null);
-  const [food, setFood] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+  const status = useSelector((state) => state.products.status);
 
   const ctg = useSelector((store) => store.filter.category);
   const sort = useSelector((store) => store.filter.sort);
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const category = ctg.ctg === null ? '' : `category=${ctg.ctg}`;
-        const sortBy = sort.sortType.replace('-', '');
-        const orderBy = sort.sortType.includes('-') ? 'asc' : 'desc';
-        // const search = searchValue.length > 0 ? `&search=${searchValue.toLowerCase()}` : ''; ${search}
+      const category = ctg.ctg === null ? '' : `category=${ctg.ctg}`;
+      const sortBy = sort.sortType.replace('-', '');
+      const orderBy = sort.sortType.includes('-') ? 'asc' : 'desc';
+      // const search = searchValue.length > 0 ? `&search=${searchValue.toLowerCase()}` : ''; ${search}
 
-        await axios
-          .get(
-            `https://64a83dc3dca581464b858768.mockapi.io/products?${category}&sortBy=${sortBy}&order=${orderBy}`,
-          )
-          .then((response) => {
-            setFood(response.data);
-            setLoading(false);
-          });
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-        console.log(error);
-      }
+      dispatch(fetchAllProducts({ category, sortBy, orderBy }));
     };
 
     getData();
@@ -47,9 +35,11 @@ const FoodCatalog = ({ searchValue }) => {
         <Sort />
       </div>
       <div className={styles.foodCatalogBlock}>
-        {isLoading
+        {status === 'error'
+          ? 'Error'
+          : status === 'loading'
           ? [...new Array(8)].map((_, index) => <Loader key={index} />)
-          : food.map((item) => <FoodComponent key={item.id} item={item} />)}
+          : products.map((item) => <FoodComponent key={item.id} item={item} />)}
       </div>
     </div>
   );
