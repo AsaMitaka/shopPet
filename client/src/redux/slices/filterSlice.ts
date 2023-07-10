@@ -15,8 +15,12 @@ const filterSlice = createSlice({
     setCtg: (state, action) => {
       state.category = action.payload;
     },
+    setFilters: (state, action) => {
+      state.sort = action.payload.sort;
+      state.category = action.payload.category;
+    },
   },
 });
 
-export const { setSort, setCtg } = filterSlice.actions;
+export const { setSort, setCtg, setFilters } = filterSlice.actions;
 export default filterSlice.reducer;

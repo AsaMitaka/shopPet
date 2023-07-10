@@ -1,9 +1,13 @@
 import { CartItem } from '../../components';
 import CartEmpty from './cartEmpty';
 import styles from './cart.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAllProducts } from '../../redux/slices/cartSlice';
 
 const Cart = () => {
-  const totalPrice = 0;
+  const dispatch = useDispatch();
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const cartItems = useSelector((state) => state.cart.cart);
 
   if (!totalPrice) {
     return (
@@ -14,17 +18,25 @@ const Cart = () => {
     );
   }
 
+  const onHandleClearCart = () => {
+    dispatch(deleteAllProducts());
+  };
+
   return (
     <section className={styles.cart}>
-      <h1>Cart</h1>
       <div className={styles.cartBlock}>
-        <button className={styles.cartBlockBtn}>x</button>
-        {[...new Array(1)].map((_, index) => (
-          <CartItem key={index} />
+        <div className={styles.cartBlockRow}>
+          <h1>Cart</h1>
+          <button className={styles.cartBlockBtn} onClick={onHandleClearCart}>
+            Clear cart
+          </button>
+        </div>
+        {cartItems.map((item) => (
+          <CartItem key={item.id} item={item} />
         ))}
       </div>
       <div className={styles.cartAmount}>
-        Amount: <span className={styles.cartAmountSpan}>24 $</span>
+        Amount: <span className={styles.cartAmountSpan}>{totalPrice} $</span>
       </div>
     </section>
   );

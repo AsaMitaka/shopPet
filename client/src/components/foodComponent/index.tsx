@@ -1,18 +1,33 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import styles from './foodComponent.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../../redux/slices/cartSlice';
 
 const FoodComponent = ({ item: { name, price, image, rating, weight, id } }) => {
-  const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
 
-  const handleCount = () => setCount((prev) => prev + 1);
+  const onHandleAdd = () => {
+    const item = {
+      id,
+      name,
+      price,
+      image,
+    };
+
+    dispatch(addProduct(item));
+  };
+
+  const count = useSelector((state) => {
+    const item = state.cart.cart.find((item) => item.id === id);
+    return item ? item.count : 0;
+  });
 
   return (
     <div className={styles.foodContainer}>
       <div className={styles.foodBlock}>
         <img src={image} alt="" className={styles.foodImg} />
-        <button className={styles.foodBtn} onClick={handleCount}>
+        <button className={styles.foodBtn} onClick={onHandleAdd}>
           <span>{count}</span> Add
         </button>
       </div>

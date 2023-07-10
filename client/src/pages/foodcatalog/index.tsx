@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './foodcatalog.module.scss';
 import { Categories, FoodComponent, Loader, Sort } from '../../components';
+
 import { useSelector } from 'react-redux';
 
 const FoodCatalog = ({ searchValue }) => {
@@ -25,7 +26,6 @@ const FoodCatalog = ({ searchValue }) => {
             `https://64a83dc3dca581464b858768.mockapi.io/products?${category}&sortBy=${sortBy}&order=${orderBy}`,
           )
           .then((response) => {
-            console.log(response.data);
             setFood(response.data);
             setLoading(false);
           });
@@ -37,7 +37,7 @@ const FoodCatalog = ({ searchValue }) => {
     };
 
     getData();
-  }, [ctg, sort, searchValue]);
+  }, [ctg, sort]);
 
   return (
     <div className={styles.foodcatalog}>
