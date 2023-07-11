@@ -7,6 +7,7 @@ export const fetchAllProducts = createAsyncThunk('product/fetchAllProducts', asy
   const response = await axios.get(
     `https://64a83dc3dca581464b858768.mockapi.io/products?${category}&sortBy=${sortBy}&order=${orderBy}`,
   );
+
   return response.data;
 });
 

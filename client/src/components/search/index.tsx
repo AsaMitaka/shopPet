@@ -1,15 +1,20 @@
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import styles from './search.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearch } from '../../redux/slices/filterSlice';
 
-const Search = ({ searchValue, setSearchValue }) => {
+const Search = () => {
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state) => state.filter.search);
+
   const handleSearch = (e) => {
     const value = e.target.value;
 
-    setSearchValue(value);
+    dispatch(setSearch(value));
   };
 
   const handleClearSearch = () => {
-    setSearchValue('');
+    dispatch(setSearch(''));
   };
 
   return (

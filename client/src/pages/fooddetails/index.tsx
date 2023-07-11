@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AiFillStar } from 'react-icons/ai';
 import styles from './fooddetails.module.scss';
@@ -7,6 +7,8 @@ import styles from './fooddetails.module.scss';
 const FoodDetails = () => {
   const { id } = useParams();
   const [food, setFood] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -18,6 +20,7 @@ const FoodDetails = () => {
           });
       } catch (error) {
         console.log(error);
+        navigate('/');
       }
     };
 

@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import styles from './foodcatalog.module.scss';
 import { Categories, FoodComponent, Loader, Sort } from '../../components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProducts } from '../../redux/slices/productsSlice';
 
-const FoodCatalog = ({ searchValue }) => {
+const FoodCatalog = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const status = useSelector((state) => state.products.status);
+  // const searchValue = useSelector((state) => state.filter.search);
 
   const ctg = useSelector((store) => store.filter.category);
   const sort = useSelector((store) => store.filter.sort);
