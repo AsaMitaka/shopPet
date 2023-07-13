@@ -1,14 +1,20 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AiFillStar } from 'react-icons/ai';
 import styles from './fooddetails.module.scss';
 
-const FoodDetails = () => {
-  const { id } = useParams();
-  const [food, setFood] = useState([]);
-
+const FoodDetails: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [food, setFood] = useState<{
+    image: string;
+    name: string;
+    price: number;
+    description: string;
+    rating: number;
+    weight: string;
+  }>({ image: '', name: '', price: 0, description: '', rating: 0, weight: '' });
 
   useEffect(() => {
     const getData = async () => {

@@ -1,12 +1,14 @@
+import React from 'react';
 import { LuShoppingCart } from 'react-icons/lu';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.scss';
 import { Search } from '..';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
-const Header = () => {
+const Header: React.FC = () => {
   const location = useLocation();
-  const amount = useSelector((state) => state.cart.totalPrice);
+  const amount = useSelector((state: RootState) => state.cart.totalPrice);
 
   return (
     <header className={styles.header}>

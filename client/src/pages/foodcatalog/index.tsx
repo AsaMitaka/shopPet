@@ -1,18 +1,18 @@
-import { useEffect } from 'react';
+import { RootState, useAppDispatch } from '../../redux/store';
+import React, { useEffect } from 'react';
 import styles from './foodcatalog.module.scss';
 import { Categories, FoodComponent, Loader, Sort } from '../../components';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchAllProducts } from '../../redux/slices/productsSlice';
 
-const FoodCatalog = () => {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const status = useSelector((state) => state.products.status);
+const FoodCatalog: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const products = useSelector((state: RootState) => state.products.products);
+  const status = useSelector((state: RootState) => state.products.status);
   // const searchValue = useSelector((state) => state.filter.search);
 
-  const ctg = useSelector((store) => store.filter.category);
-  const sort = useSelector((store) => store.filter.sort);
+  const ctg = useSelector((state: RootState) => state.filter.category);
+  const sort = useSelector((state: RootState) => state.filter.sort);
 
   useEffect(() => {
     const getData = async () => {

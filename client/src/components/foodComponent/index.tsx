@@ -1,10 +1,27 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import styles from './foodComponent.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../redux/slices/cartSlice';
+import { RootState } from '../../redux/store';
 
-const FoodComponent = ({ item: { name, price, image, rating, weight, id } }) => {
+type Product = {
+  name: string;
+  price: number;
+  image: string;
+  rating: number;
+  weight: string;
+  id: string;
+};
+
+type ProductItem = {
+  item: Product;
+};
+
+const FoodComponent: React.FC<ProductItem> = ({
+  item: { name, price, image, rating, weight, id },
+}) => {
   const dispatch = useDispatch();
 
   const onHandleAdd = () => {
@@ -18,7 +35,7 @@ const FoodComponent = ({ item: { name, price, image, rating, weight, id } }) => 
     dispatch(addProduct(item));
   };
 
-  const count = useSelector((state) => {
+  const count = useSelector((state: RootState) => {
     const item = state.cart.cart.find((item) => item.id === id);
     return item ? item.count : 0;
   });

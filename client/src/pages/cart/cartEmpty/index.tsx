@@ -1,6 +1,6 @@
 import styles from './cartEmpty.module.scss';
 
-const CartEmpty = () => {
+const CartEmpty: React.FC = () => {
   return (
     <div className={styles.cartEmpty}>
       <div className={styles.cartEmptyBlock}>

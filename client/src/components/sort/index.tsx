@@ -1,10 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import styles from './sort.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../../redux/slices/filterSlice';
+import { RootState } from '../../redux/store';
 
-export const sortItems = [
+type SortItem = {
+  name: string;
+  sortType: string;
+};
+
+export const sortItems: SortItem[] = [
   { name: 'Popular↑', sortType: 'rating' },
   { name: 'Popular↓', sortType: '-rating' },
   { name: 'Price↑', sortType: 'price' },
@@ -13,13 +19,13 @@ export const sortItems = [
   { name: 'Alphabet↓', sortType: '-name' },
 ];
 
-const Sort = () => {
-  const sort = useSelector((state) => state.filter.sort);
+const Sort: React.FC = () => {
+  const sort = useSelector((state: RootState) => state.filter.sort);
   const dispatch = useDispatch();
   const [isActive, setActive] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
-  const handleSort = (obj) => {
+  const handleSort = (obj: SortItem) => {
     dispatch(setSort(obj));
     setActive(false);
   };
@@ -29,11 +35,17 @@ const Sort = () => {
   };
 
   useEffect(() => {
-    document.body.addEventListener('click', (event) => {
-      if (!sortRef.current.contains(event.target)) {
+    const handleClickOutside = (event: any) => {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
         setActive(false);
       }
-    });
+    };
+
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside);
+    };
   }, []);
 
   return (

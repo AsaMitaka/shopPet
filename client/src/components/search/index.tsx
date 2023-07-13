@@ -1,14 +1,16 @@
+import React from 'react';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import styles from './search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../../redux/slices/filterSlice';
+import { RootState } from '../../redux/store';
 
-const Search = () => {
+const Search: React.FC = () => {
   const dispatch = useDispatch();
-  const searchValue = useSelector((state) => state.filter.search);
+  const searchValue = useSelector((state: RootState) => state.filter.search);
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
 
     dispatch(setSearch(value));
   };
@@ -24,7 +26,7 @@ const Search = () => {
         type="text"
         placeholder="search"
         value={searchValue}
-        onChange={(e) => handleSearch(e)}
+        onChange={handleSearch}
         className={styles.searchInput}
       />
       {searchValue && (

@@ -1,8 +1,21 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './cartItem.module.scss';
 import { addProduct, deleteOneProduct, deleteProduct } from '../../redux/slices/cartSlice';
 
-const CartItem = ({ item: { id, name, price, image, count } }) => {
+type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  count: number;
+};
+
+type CartItemProps = {
+  item: CartItem;
+};
+
+const CartItem: React.FC<CartItemProps> = ({ item: { id, name, price, image, count } }) => {
   const dispatch = useDispatch();
 
   const onHandleAdd = () => {
@@ -13,7 +26,7 @@ const CartItem = ({ item: { id, name, price, image, count } }) => {
       image,
     };
 
-    dispatch(addProduct(item));
+    dispatch(addProduct(item as CartItem));
   };
 
   const onHandleRemove = () => {

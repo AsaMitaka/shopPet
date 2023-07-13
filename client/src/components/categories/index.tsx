@@ -1,8 +1,15 @@
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCtg } from '../../redux/slices/filterSlice';
 import styles from './categories.module.scss';
+import { RootState } from '../../redux/store';
 
-export const categoryItems = [
+type CategoryItem = {
+  name: string;
+  ctg: string | null;
+};
+
+export const categoryItems: CategoryItem[] = [
   { name: 'Water', ctg: 'water' },
   { name: 'Vegetable', ctg: 'vegetable' },
   { name: 'Fruit', ctg: 'fruit' },
@@ -10,11 +17,11 @@ export const categoryItems = [
   { name: 'Bread', ctg: 'bread' },
 ];
 
-const Categories = () => {
-  const ctg = useSelector((store) => store.filter.category);
+const Categories: React.FC = () => {
+  const ctg = useSelector((state: RootState) => state.filter.category);
   const dispatch = useDispatch();
 
-  const handleCategory = (obj) => {
+  const handleCategory = (obj: CategoryItem) => {
     dispatch(setCtg(obj));
   };
 
