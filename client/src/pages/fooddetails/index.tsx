@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AiFillStar } from 'react-icons/ai';
 import styles from './fooddetails.module.scss';
+import { addProduct } from '../../redux/slices/cartSlice';
+import { useDispatch } from 'react-redux';
 
 const FoodDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -33,6 +35,19 @@ const FoodDetails: React.FC = () => {
     getData();
   }, []);
 
+  const dispatch = useDispatch();
+
+  const onHandleAdd = () => {
+    const item = {
+      id: id,
+      name: food.name,
+      price: food.price,
+      image: food.image,
+    };
+
+    dispatch(addProduct(item));
+  };
+
   return (
     <section className={styles.foodDetails}>
       <div className={styles.foodBlock}>
@@ -52,7 +67,9 @@ const FoodDetails: React.FC = () => {
             </p>
             <p>{food.weight}</p>
           </div>
-          <button className={styles.foodDetailsBtn}>Add</button>
+          <button className={styles.foodDetailsBtn} onClick={onHandleAdd}>
+            Add
+          </button>
         </div>
       </div>
     </section>
