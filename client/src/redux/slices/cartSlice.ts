@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import getItemsFromLC from '../../utils/getItemsFromLC';
 
 type CartItem = {
   id: string;
@@ -13,9 +14,11 @@ type CartSliceState = {
   cart: CartItem[];
 };
 
+const { cart, totalPrice } = getItemsFromLC();
+
 const initialState: CartSliceState = {
-  totalPrice: 0,
-  cart: [],
+  totalPrice: totalPrice,
+  cart: cart,
 };
 
 const cartSlice = createSlice({

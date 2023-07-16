@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LuShoppingCart } from 'react-icons/lu';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './header.module.scss';
@@ -8,7 +8,13 @@ import { RootState } from '../../redux/store';
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const amount = useSelector((state: RootState) => state.cart.totalPrice);
+  const { cart, totalPrice } = useSelector((state: RootState) => state.cart);
+  console.log(cart, totalPrice);
+
+  useEffect(() => {
+    const json = JSON.stringify(cart);
+    localStorage.setItem('cart', json);
+  }, [cart]);
 
   return (
     <header className={styles.header}>
@@ -29,7 +35,7 @@ const Header: React.FC = () => {
             {location.pathname !== '/cart' && (
               <Link to="/cart" className={styles.navListLink}>
                 <LuShoppingCart />
-                <span className={styles.navListLinkSpan}>Cart: {amount}</span>
+                <span className={styles.navListLinkSpan}>Cart: {totalPrice}</span>
               </Link>
             )}
           </div>
